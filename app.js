@@ -15,6 +15,7 @@ var rightProductImage = document.getElementById('Right');
 // results html elements
 var resultsDiv = document.getElementById('Results');
 var resultsUl = document.createElement('ul');
+var buttonLinks = document.getElementById('ButtonLinks');
 
 // info for product constructor
 var imagesSrcArr = [
@@ -145,6 +146,26 @@ function roundLimit(event){
   if (rounds === roundsLimit){
     alert('That\'s ' + roundsLimit + ' Rounds of Voting!');
     productContainer.removeEventListener('click', roundLimit);
+    renderStats();
+  }
+}
+
+// render the stats
+function renderStats() {
+  var h1El = document.createElement('h1');
+  h1El.textContent = 'Stats';
+  resultsDiv.appendChild(h1El);
+
+  var buttonEl = document.createElement('a');
+  buttonEl.textContent = 'View Results';
+  buttonEl.setAttribute('class', 'btn');
+  buttonEl.href = '#statsContainer';
+  buttonLinks.appendChild(buttonEl);
+
+  for (var i = 0; i < ProductImage.allImages.length; i++) {
+    var liEl = document.createElement('li');
+    liEl.textContent = ProductImage.allImages[i].timesClicked + ' votes for ' + ProductImage.allImages[i].name;
+    resultsDiv.appendChild(liEl);
   }
 }
 
