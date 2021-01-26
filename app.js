@@ -1,5 +1,61 @@
 'use strict';
 
+// variables
+
+// rounds
+var rounds = 0;
+var roundsLimit = 25;
+
+// select elements from my HTML to render goat stuff
+var goatContainer = document.getElementById('Product-container');
+var leftProductImage = document.getElementById('Left');
+var middleProductImage = document.getElementById('Middle');
+var rightProductImage = document.getElementById('Right');
+
+// info for product constructor
+var imagesSrcArr = [
+  'images/bag.jpg',
+  'images/banana.jpg',
+  'images/bathroom.jpg',
+  'images/boots.jpg',
+  'images/breakfast.jpg',
+  'images/bubblegum.jpg',
+  'images/chair.jpg',
+  'images/cthulhu.jpg',
+  'images/dog-duck.jpg',
+  'images/dragon.jpg',
+  'images/pen.jpg',
+  'images/pet-sweep.jpg',
+  'images/scissors.jpg',
+  'images/shark.jpg',
+  'images/sweep.png',
+  'images/tauntaun.jpg',
+  'images/unicorn.jpg',
+  'images/usb.gif',
+  'images/water-can.jpg',
+  'images/wine-glass.jpg'];
+var nameSrcArr = [
+  'bag',
+  'banana',
+  'bathroom',
+  'boots',
+  'breakfast',
+  'bubblegum',
+  'chair',
+  'cthulhu',
+  'dog-duck',
+  'dragon',
+  'pen',
+  'pet-sweep',
+  'scissors',
+  'shark',
+  'sweep',
+  'tauntaun',
+  'unicorn',
+  'usb',
+  'water-can',
+  'wine-glass'];
+
 // create a contructor
 //   name
 //   timesClicked
@@ -43,14 +99,6 @@ new ProductImage('usb', 'images/usb.gif');
 new ProductImage('water-can', 'images/water-can.jpg');
 new ProductImage('wine-glass', 'images/wine-glass.jpg');
 console.log(ProductImage.allImages);
-
-
-// select elements from my HTML to render goat stuff
-
-var goatContainer = document.getElementById('Product-container');
-var leftProductImage = document.getElementById('Left');
-var middleProductImage = document.getElementById('Middle');
-var rightProductImage = document.getElementById('Right');
 
 // generates 2 random goat images
 function generateRandomProduct() {
