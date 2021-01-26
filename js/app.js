@@ -69,18 +69,24 @@ function ProductImage(name, image) {
   //file path to image
   this.image = image;
 
+  // 'this' refers to the object that the constructor is creating
   ProductImage.allImages.push(this);
+  // Mapping using bracket notation on an objects to assign he object to a key that is this.name
+  ProductImage.imageMap[this.name] = this;
 }
+
 
 // Creates our allImages property on the ProductImage Contructor
 ProductImage.allImages = [];
+ProductImage.imageMap = {};
 
 // a for loop that creates the ProductImage, and runs the operations within the constructor
 for (var i = 0; i < imagesSrcArr.length; i++){
   new ProductImage(nameSrcArr[i], imagesSrcArr[i]);
 }
-console.log(ProductImage.allImages);
-
+console.log('allImages: ', ProductImage.allImages);
+console.log('imageMap: ', ProductImage.imageMap);
+console.log('numberOfClicks: ', ProductImage.numberOfClicks);
 
 // generates 3 random product images
 function generateRandomProduct() {
@@ -136,7 +142,8 @@ function roundLimit(event){
   for (var i = 0; i < ProductImage.allImages.length; i++){
     if (event.target.src.includes(ProductImage.allImages[i].image)){
       ProductImage.allImages[i].timesClicked++;
-      console.log(ProductImage.allImages[i]);
+      console.log('ProductImage.allImages[i]: ', ProductImage.allImages[i]);
+      console.log('ProductImage.allImages[i].timesClicked: ', ProductImage.allImages[i].timesClicked);
     }
   }
   rounds++;
@@ -144,9 +151,43 @@ function roundLimit(event){
   var newProducts = generateRandomProduct();
   renderProducts(newProducts[0], newProducts[1], newProducts[2]);
   if (rounds === roundsLimit){
+    for (var i = 0; i < ProductImage.allImages.length; i++) {
+      votesByProduct.push(ProductImage.allImages[i].timesClicked);
+    }
     alert('That\'s ' + roundsLimit + ' Rounds of Voting!');
+    // remove the eventlistener after 25 rounds
     productContainer.removeEventListener('click', roundLimit);
+    // show the stats after the 25 rounds
     renderStats();
+    // draw the chart after the 25 rounds
+    var myChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        // set labels to the array that contains all the names
+        labels: nameSrcArr,
+        datasets: [{
+          label: 'times clicked',
+          // votes by product / numbers clicked
+          data: votesByProduct,
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.2)',
+          ],
+          borderColor: [
+            'rgba(255, 99, 132, 1)',
+          ],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: true
+            }
+          }]
+        }
+      }
+    });
   }
 }
 
@@ -171,4 +212,51 @@ function renderStats() {
 
 productContainer.addEventListener('click', roundLimit);
 resultsDiv.appendChild(resultsUl);
+
+// ------------------------------
+// Demo Chart.js 
+
+var ctx = document.getElementById('myChart').getContext('2d');
+
+var votesByProduct = [];
+var timesProductsAreShow = [];
+
+// var myChart = new Chart(ctx, {
+//   type: 'bar',
+//   data: {
+//     // set labels to the array that contains all the names
+//     labels: nameSrcArr,
+//     datasets: [{
+//       label: 'times clicked',
+//       // votes by product / numbers clicked
+//       data: votesByProduct,
+//       backgroundColor: [
+//         'rgba(255, 99, 132, 0.2)',
+//         'rgba(54, 162, 235, 0.2)',
+//         'rgba(255, 206, 86, 0.2)',
+//         'rgba(75, 192, 192, 0.2)',
+//         'rgba(153, 102, 255, 0.2)',
+//         'rgba(255, 159, 64, 0.2)'
+//       ],
+//       borderColor: [
+//         'rgba(255, 99, 132, 1)',
+//         'rgba(54, 162, 235, 1)',
+//         'rgba(255, 206, 86, 1)',
+//         'rgba(75, 192, 192, 1)',
+//         'rgba(153, 102, 255, 1)',
+//         'rgba(255, 159, 64, 1)'
+//       ],
+//       borderWidth: 1
+//     }]
+//   },
+//   options: {
+//     scales: {
+//       yAxes: [{
+//         ticks: {
+//           beginAtZero: true
+//         }
+//       }]
+//     }
+//   }
+// });
 
