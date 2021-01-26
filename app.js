@@ -61,12 +61,6 @@ var nameSrcArr = [
   'wine-glass'];
 
 // create a contructor
-//   name
-//   timesClicked
-//   timesShown
-//   image
-//   all images shown
-
 function ProductImage(name, image) {
   this.name = name;
   this.timesClicked = 0;
@@ -86,27 +80,6 @@ for (var i = 0; i < imagesSrcArr.length; i++){
 }
 console.log(ProductImage.allImages);
 
-// // creates the ProductImage, and runs the operations within the constructor
-// new ProductImage('bag','images/bag.jpg');
-// new ProductImage('banana','images/banana.jpg');
-// new ProductImage('bathroom','images/bathroom.jpg');
-// new ProductImage('boots','images/boots.jpg');
-// new ProductImage('breakfast','images/breakfast.jpg');
-// new ProductImage('bubblegum','images/bubblegum.jpg');
-// new ProductImage('chair','images/chair.jpg');
-// new ProductImage('cthulhu','images/cthulhu.jpg');
-// new ProductImage('dog-duck', 'images/dog-duck.jpg');
-// new ProductImage('dragon', 'images/dragon.jpg');
-// new ProductImage('pen', 'images/pen.jpg');
-// new ProductImage('pet-sweep', 'images/pet-sweep.jpg');
-// new ProductImage('scissors', 'images/scissors.jpg');
-// new ProductImage('shark','images/shark.jpg');
-// new ProductImage('sweep', 'images/sweep.png');
-// new ProductImage('tauntaun', 'images/tauntaun.jpg');
-// new ProductImage('unicorn', 'images/unicorn.jpg');
-// new ProductImage('usb', 'images/usb.gif');
-// new ProductImage('water-can', 'images/water-can.jpg');
-// new ProductImage('wine-glass', 'images/wine-glass.jpg');
 
 // generates 3 random product images
 function generateRandomProduct() {
@@ -165,7 +138,6 @@ function roundLimit(event){
       console.log(ProductImage.allImages[i]);
     }
   }
-  // eslint-disable-next-line no-unused-vars
   rounds++;
   console.log(rounds);
   var newProducts = generateRandomProduct();
@@ -178,20 +150,4 @@ function roundLimit(event){
 
 productContainer.addEventListener('click', roundLimit);
 resultsDiv.appendChild(resultsUl);
-
-// how do we do something everytime an image was clicked
-// productContainer.addEventListener('click', function (event) {
-//   console.log(event.target); // the actual item that was clicked
-
-//   // how do identify which image is clicked.  Increment the object that was clicked.
-//   for (var i = 0; i < ProductImage.allImages.length; i++) {
-//     if (event.target.src.includes(ProductImage.allImages[i].image)) {
-//       ProductImage.allImages[i].timesClicked++;
-//       console.log(ProductImage.allImages[i]);
-//     }
-//   }
-
-//   var newProducts = generateRandomProduct();
-//   renderProducts(newProducts[0], newProducts[1], newProducts[2]);
-// });
 
