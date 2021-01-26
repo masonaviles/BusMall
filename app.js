@@ -76,29 +76,33 @@ function ProductImage(name, image) {
 // Creates our allImages property on the ProductImage Contructor
 ProductImage.allImages = [];
 
-
-// creates the ProductImage, and runs the operations within the constructor
-new ProductImage('bag','images/bag.jpg');
-new ProductImage('banana','images/banana.jpg');
-new ProductImage('bathroom','images/bathroom.jpg');
-new ProductImage('boots','images/boots.jpg');
-new ProductImage('breakfast','images/breakfast.jpg');
-new ProductImage('bubblegum','images/bubblegum.jpg');
-new ProductImage('chair','images/chair.jpg');
-new ProductImage('cthulhu','images/cthulhu.jpg');
-new ProductImage('dog-duck', 'images/dog-duck.jpg');
-new ProductImage('dragon', 'images/dragon.jpg');
-new ProductImage('pen', 'images/pen.jpg');
-new ProductImage('pet-sweep', 'images/pet-sweep.jpg');
-new ProductImage('scissors', 'images/scissors.jpg');
-new ProductImage('shark','images/shark.jpg');
-new ProductImage('sweep', 'images/sweep.png');
-new ProductImage('tauntaun', 'images/tauntaun.jpg');
-new ProductImage('unicorn', 'images/unicorn.jpg');
-new ProductImage('usb', 'images/usb.gif');
-new ProductImage('water-can', 'images/water-can.jpg');
-new ProductImage('wine-glass', 'images/wine-glass.jpg');
+// a for loop that creates the ProductImage, and runs the operations within the constructor
+for (var i = 0; i < imagesSrcArr.length; i++){
+  new ProductImage(nameSrcArr[i], imagesSrcArr[i]);
+}
 console.log(ProductImage.allImages);
+
+// // creates the ProductImage, and runs the operations within the constructor
+// new ProductImage('bag','images/bag.jpg');
+// new ProductImage('banana','images/banana.jpg');
+// new ProductImage('bathroom','images/bathroom.jpg');
+// new ProductImage('boots','images/boots.jpg');
+// new ProductImage('breakfast','images/breakfast.jpg');
+// new ProductImage('bubblegum','images/bubblegum.jpg');
+// new ProductImage('chair','images/chair.jpg');
+// new ProductImage('cthulhu','images/cthulhu.jpg');
+// new ProductImage('dog-duck', 'images/dog-duck.jpg');
+// new ProductImage('dragon', 'images/dragon.jpg');
+// new ProductImage('pen', 'images/pen.jpg');
+// new ProductImage('pet-sweep', 'images/pet-sweep.jpg');
+// new ProductImage('scissors', 'images/scissors.jpg');
+// new ProductImage('shark','images/shark.jpg');
+// new ProductImage('sweep', 'images/sweep.png');
+// new ProductImage('tauntaun', 'images/tauntaun.jpg');
+// new ProductImage('unicorn', 'images/unicorn.jpg');
+// new ProductImage('usb', 'images/usb.gif');
+// new ProductImage('water-can', 'images/water-can.jpg');
+// new ProductImage('wine-glass', 'images/wine-glass.jpg');
 
 // generates 2 random goat images
 function generateRandomProduct() {
