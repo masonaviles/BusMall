@@ -19,26 +19,26 @@ var buttonLinks = document.getElementById('ButtonLinks');
 
 // info for product constructor
 var imagesSrcArr = [
-  'images/bag.jpg',
-  'images/banana.jpg',
-  'images/bathroom.jpg',
-  'images/boots.jpg',
-  'images/breakfast.jpg',
-  'images/bubblegum.jpg',
-  'images/chair.jpg',
-  'images/cthulhu.jpg',
-  'images/dog-duck.jpg',
-  'images/dragon.jpg',
-  'images/pen.jpg',
-  'images/pet-sweep.jpg',
-  'images/scissors.jpg',
-  'images/shark.jpg',
-  'images/sweep.png',
-  'images/tauntaun.jpg',
-  'images/unicorn.jpg',
-  'images/usb.gif',
-  'images/water-can.jpg',
-  'images/wine-glass.jpg'];
+  'bag.jpg',
+  'banana.jpg',
+  'bathroom.jpg',
+  'boots.jpg',
+  'breakfast.jpg',
+  'bubblegum.jpg',
+  'chair.jpg',
+  'cthulhu.jpg',
+  'dog-duck.jpg',
+  'dragon.jpg',
+  'pen.jpg',
+  'pet-sweep.jpg',
+  'scissors.jpg',
+  'shark.jpg',
+  'sweep.png',
+  'tauntaun.jpg',
+  'unicorn.jpg',
+  'usb.gif',
+  'water-can.jpg',
+  'wine-glass.jpg'];
 var nameSrcArr = [
   'bag',
   'banana',
@@ -62,12 +62,12 @@ var nameSrcArr = [
   'wine-glass'];
 
 // create a contructor
-function ProductImage(name, image) {
-  this.name = name;
+function ProductImage(name) {
+  this.name = name.substring(0, name.length - 4);
   this.timesClicked = 0;
   this.timesShown = 0;
   //file path to image
-  this.image = image;
+  this.image = `images/${name}`;
 
   // 'this' refers to the object that the constructor is creating
   ProductImage.allImages.push(this);
@@ -81,8 +81,11 @@ ProductImage.allImages = [];
 ProductImage.imageMap = {};
 
 // a for loop that creates the ProductImage, and runs the operations within the constructor
-for (var i = 0; i < imagesSrcArr.length; i++){
-  new ProductImage(nameSrcArr[i], imagesSrcArr[i]);
+// for (var i = 0; i < imagesSrcArr.length; i++){
+//   new ProductImage(nameSrcArr[i], imagesSrcArr[i]);
+// }
+for (var i = 0; i < imagesSrcArr.length; i++) {
+  new ProductImage(imagesSrcArr[i]);
 }
 console.log('allImages: ', ProductImage.allImages);
 console.log('imageMap: ', ProductImage.imageMap);
@@ -91,49 +94,90 @@ console.log('numberOfClicks: ', ProductImage.numberOfClicks);
 // generates 3 random product images
 function generateRandomProduct() {
 
-  // randomIndex from our  array
+  // // randomIndex from our  array
+  // var leftIndex = Math.floor(Math.random() * ProductImage.allImages.length);
+  // var rightIndex = Math.floor(Math.random() * ProductImage.allImages.length);
+  // var middleIndex = Math.floor(Math.random() * ProductImage.allImages.length);
+
+  // // make sure they don't have the same pictures
+  // // put it in one while loop
+  // while (leftIndex === middleIndex || leftIndex === rightIndex || middleIndex === rightIndex) {
+  //   rightIndex = Math.floor(Math.random() * ProductImage.allImages.length);
+  //   middleIndex = Math.floor(Math.random() * ProductImage.allImages.length);
+  //   leftIndex = Math.floor(Math.random() * ProductImage.allImages.length);
+  // }
+  // // while (rightIndex === middleIndex) {
+  // //   rightIndex = Math.floor(Math.random() * ProductImage.allImages.length);
+  // // }
+  // // while (leftIndex === middleIndex) {
+  // //   middleIndex = Math.floor(Math.random() * ProductImage.allImages.length);
+  // // }
+
+  // var leftProduct = ProductImage.allImages[leftIndex];
+  // var rightProduct = ProductImage.allImages[rightIndex];
+  // var middleProduct = ProductImage.allImages[middleIndex];
+
+  // return [leftProduct, middleProduct, rightProduct];
   var leftIndex = Math.floor(Math.random() * ProductImage.allImages.length);
   var rightIndex = Math.floor(Math.random() * ProductImage.allImages.length);
   var middleIndex = Math.floor(Math.random() * ProductImage.allImages.length);
 
-  // make sure they don't have the same pictures
-  // put it in one while loop
-  while (leftIndex === middleIndex || leftIndex === rightIndex || middleIndex === rightIndex) {
-    rightIndex = Math.floor(Math.random() * ProductImage.allImages.length);
-    middleIndex = Math.floor(Math.random() * ProductImage.allImages.length);
-    leftIndex = Math.floor(Math.random() * ProductImage.allImages.length);
+  // as long as the their is one duplicate index
+  //   UPDATE:  We also need to check whether our middle and right Index are equal, that added index increases our complexity more that just double since everything needs to be compared.
+  while (leftIndex === rightIndex || leftIndex === middleIndex || middleIndex === rightIndex) {
+    if (leftIndex === rightIndex) {
+      rightIndex = Math.floor(Math.random() * ProductImage.allImages.length);
+    }
+    if (leftIndex === middleIndex) {
+      middleIndex = Math.floor(Math.random() * ProductImage.allImages.length);
+    }
+    // Adding additional conditional here to account for the added condition in the while
+    if (middleIndex === rightIndex) {
+      rightIndex = Math.floor(Math.random() * ProductImage.allImages.length);
+    }
   }
-  // while (rightIndex === middleIndex) {
-  //   rightIndex = Math.floor(Math.random() * ProductImage.allImages.length);
-  // }
-  // while (leftIndex === middleIndex) {
-  //   middleIndex = Math.floor(Math.random() * ProductImage.allImages.length);
-  // }
 
-  var leftProduct = ProductImage.allImages[leftIndex];
-  var rightProduct = ProductImage.allImages[rightIndex];
-  var middleProduct = ProductImage.allImages[middleIndex];
+  var leftProductImage = ProductImage.allImages[leftIndex];
+  var middleProductImage = ProductImage.allImages[middleIndex];
+  var rightProductImage = ProductImage.allImages[rightIndex];
 
-  return [leftProduct, middleProduct, rightProduct];
+  return [leftProductImage, middleProductImage, rightProductImage];
 }
 
 // renders the 3 images
-function renderProducts(leftProduct, middleProduct, rightProduct) {
-  leftProductImage.src = leftProduct.image;
-  leftProduct.timesShown++;
-  // leftProductImage.setAttribute('data-id', leftGoat.image);
+function renderProducts() {
+  var currentlyRenderedImages = [leftProductImage.name, rightProductImage.name, middleProductImage.name];
 
-  rightProductImage.src = rightProduct.image;
-  rightProduct.timesShown++;
-  // rightProductImage.setAttribute('data-id', rightGoat.image);
+  var newImages = generateRandomProduct();
 
-  middleProductImage.src = middleProduct.image;
-  middleProduct.timesShown++;
+  while (
+    currentlyRenderedImages[0] === newImages[0].name ||
+    currentlyRenderedImages[1] === newImages[0].name ||
+    currentlyRenderedImages[2] === newImages[0].name ||
+    currentlyRenderedImages[0] === newImages[1].name ||
+    currentlyRenderedImages[1] === newImages[1].name ||
+    currentlyRenderedImages[2] === newImages[1].name ||
+    currentlyRenderedImages[0] === newImages[2].name ||
+    currentlyRenderedImages[1] === newImages[2].name ||
+    currentlyRenderedImages[2] === newImages[2].name
+  ) {
+    newImages = generateRandomProduct();
+  }
+
+  //render images to page
+  leftProductImage.src = newImages[0].image;
+  newImages[0].timesShown++;
+
+  rightProductImage.src = newImages[1].image;
+  newImages[1].timesShown++;
+
+  middleProductImage.src = newImages[2].image;
+  newImages[2].timesShown++;
 }
 
 // initialize our page
-var randomProducts = generateRandomProduct();
-renderProducts(randomProducts[0], randomProducts[1], randomProducts[2]);
+// var randomProducts = generateRandomProduct();
+renderProducts();
 
 // counter function. removes click event listener on images after 25 rounds
 
@@ -148,8 +192,9 @@ function roundLimit(event){
   }
   rounds++;
   console.log(rounds);
-  var newProducts = generateRandomProduct();
-  renderProducts(newProducts[0], newProducts[1], newProducts[2]);
+  // var newProducts = generateRandomProduct();
+  renderProducts();
+
   if (rounds === roundsLimit){
     for (var i = 0; i < ProductImage.allImages.length; i++) {
       votesByProduct.push(ProductImage.allImages[i].timesClicked);
